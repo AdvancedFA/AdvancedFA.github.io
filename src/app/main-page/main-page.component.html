@@ -1,1 +1,103 @@
-<p>main-page works!</p>
+<p-image
+    src="https://static.vecteezy.com/system/resources/previews/008/496/803/original/azerbaijan-flag-3d-icon-transparent-free-png.png"
+    alt="Image" width="200" [style]="{'margin':'auto','display': 'block','width': '10%'}"></p-image>
+
+<p-tabView>
+    <p-tabPanel header="Past Matches" [selected]="true">
+        <div class="grid">
+            <div class="col">
+                <p-accordion>
+                    <div *ngFor="let countries of mainPageConten.countryList">
+                        <p-accordionTab [header]="countries.country">
+                            <p-accordion>
+                                <div *ngFor="let leagues of countries.leagueList">
+                                    <p-accordionTab [header]="leagues.leagueName">
+                                        <div *ngFor="let match of leagues.matchList">
+                                            <button pButton pRipple type="button"
+                                                class="p-button-outlined p-button-rounded" style="width: 100%;"
+                                                (click)="matchSelected(match.matchId)">
+                                                <p>{{match.homeTeam.name}} vs {{match.awayTeam.name}}</p>
+                                                <p style="width: 80%;">Date:</p>
+                                            </button>
+                                        </div>
+                                    </p-accordionTab>
+                                </div>
+                            </p-accordion>
+                        </p-accordionTab>
+                    </div>
+                </p-accordion>
+            </div>
+            <p-divider layout="vertical"></p-divider>
+            <div class="col">
+                <div class="grid" *ngIf="selectedMatch">
+                    <div class="col">
+                        <p-image [src]="selectedMatch.homeTeam.logo" alt="Image" width="200"></p-image>
+                    </div>
+                    <div class="col" style="margin-top: 10%;">
+                        <h2>{{selectedMatch.homeTeam.name}} <span>VS</span> {{selectedMatch.awayTeam.name}}</h2>
+                        <h3>Date: </h3>
+                    </div>
+                    <div class="col"> <p-image [src]="selectedMatch.awayTeam.logo" alt="Image" width="200"></p-image>
+                    </div>
+                </div>
+
+                <div class="grid" *ngIf="selectedMatch">
+                    <div class="col">
+                        <h5>Coach : {{selectedMatch.homeTeam.coachName}} {{selectedMatch.homeTeam.coachSurname}}</h5>
+                        <h6>Formation : {{selectedMatch.homeTeamFormation}}</h6>
+                        <p-table [value]="selectedMatch.homeTeam.playerList">
+                            <ng-template pTemplate="caption">
+                                <button pButton pRipple type="button" label="Track" class="p-button-rounded"></button>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Number</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-player>
+                                <tr>
+                                    <td>{{player.position}}</td>
+                                    <td>{{player.name}}</td>
+                                    <td>{{player.surname}}</td>
+                                    <td>{{player.playerNumber}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <p-divider layout="vertical"></p-divider>
+                    <div class="col">
+                        <h5>Coach : {{selectedMatch.awayTeam.coachName}} {{selectedMatch.awayTeam.coachSurname}}</h5>
+                        <h6>Formation : {{selectedMatch.awayTeamFormation}}</h6>
+                        <p-table [value]="selectedMatch.awayTeam.playerList">
+                            <ng-template pTemplate="caption">
+                                <button pButton pRipple type="button" label="Track" class="p-button-rounded"></button>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Number</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-player>
+                                <tr>
+                                    <td>{{player.position}}</td>
+                                    <td>{{player.name}}</td>
+                                    <td>{{player.surname}}</td>
+                                    <td>{{player.playerNumber}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Current Mathces">
+        Coming soon ....
+    </p-tabPanel>
+</p-tabView>
